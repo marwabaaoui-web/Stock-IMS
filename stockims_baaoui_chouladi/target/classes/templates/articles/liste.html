@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Articles')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('articles')}"></nav>
+<main class="container py-4">
+    <div th:replace="~{fragments/layout :: alertes}"></div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h3 mb-0"><i class="bi bi-boxes me-2 text-primary"></i>Les articles</h1>
+        <a class="btn btn-primary" th:href="@{/articles/nouveau}"><i class="bi bi-plus-lg me-1"></i>Ajouter un article</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row g-2 align-items-center mb-3">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input id="recherche" type="search" class="form-control" placeholder="Rechercher par référence ou désignation…" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end text-muted">
+                    <span id="compteur" th:text="${#lists.size(articles)}">0</span> article(s)
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr><th>N°</th><th>Référence</th><th>Désignation</th><th class="text-center">Stock</th><th class="text-end">Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ligne th:each="a : ${articles}">
+                            <td th:text="${a.id}">1</td>
+                            <td><span class="ref" th:text="${a.reference}">TIS-001</span></td>
+                            <td th:text="${a.designation}">Rouleau de coton</td>
+                            <td class="text-center">
+                                <span class="badge rounded-pill fs-6" th:with="s=${stocks[a.id] ?: 0}"
+                                      th:classappend="${s == 0} ? 'text-bg-danger' : (${s le 5} ? 'text-bg-warning' : 'text-bg-success')"
+                                      th:text="${s}">0</span>
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-primary" th:href="@{/stock/{id}(id=${a.id})}"><i class="bi bi-arrow-left-right me-1"></i>Voir le stock</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center text-muted my-4" th:if="${#lists.isEmpty(articles)}">Aucun article. Commencez par en ajouter un.</p>
+            <p id="aucun-resultat" class="text-center text-muted my-4 d-none">Aucun article ne correspond à la recherche.</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

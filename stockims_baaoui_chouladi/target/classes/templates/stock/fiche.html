@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Stock')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('articles')}"></nav>
+<main class="container py-4">
+    <div th:replace="~{fragments/layout :: alertes}"></div>
+    <nav aria-label="breadcrumb"><ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/articles}">Articles</a></li>
+        <li class="breadcrumb-item active" th:text="${article.reference}">REF</li>
+    </ol></nav>
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+        <h1 class="h3 mb-0" th:text="${article.designation}">Article</h1>
+        <span class="ref" th:text="${article.reference}">REF</span>
+    </div>
+    <div class="row g-3">
+        <div class="col-12 col-lg-5">
+            <div class="card stock-card mb-3"><div class="card-body text-center py-4">
+                <div class="text-muted text-uppercase small">Stock disponible</div>
+                <div class="stock-ring mx-auto my-3"
+                     th:classappend="${stock == 0} ? 'ring-danger' : (${stock le 5} ? 'ring-warning' : 'ring-success')">
+                    <span th:text="${stock}">0</span>
+                </div>
+                <span class="badge rounded-pill"
+                      th:classappend="${stock == 0} ? 'text-bg-danger' : (${stock le 5} ? 'text-bg-warning' : 'text-bg-success')"
+                      th:text="${stock == 0} ? 'Rupture de stock' : (${stock le 5} ? 'Stock faible' : 'Stock disponible')">État</span>
+                <div class="small text-muted mt-3">Stock = somme des entrées − somme des sorties</div>
+            </div></div>
+            <div class="card"><div class="card-body">
+                <h2 class="h6 mb-3">Nouveau mouvement</h2>
+                <form method="post" th:object="${mouvement}" th:action="@{/stock/{id}/entrees(id=${article.id})}" novalidate>
+                    <div class="alert alert-danger d-flex align-items-start" role="alert" th:if="${#fields.hasGlobalErrors()}">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <div><div th:each="erreur : ${#fields.globalErrors()}" th:text="${erreur}">Erreur</div></div>
+                    </div>
+                    <label for="quantite" class="form-label">Quantité</label>
+                    <input id="quantite" type="number" step="1" min="1" th:field="*{quantite}" class="form-control form-control-lg"
+                           placeholder="Ex. 10" th:classappend="${#fields.hasErrors('quantite')} ? 'is-invalid'">
+                    <div class="invalid-feedback" th:errors="*{quantite}">Erreur</div>
+                    <div class="form-text mb-3">La date du jour est enregistrée automatiquement.</div>
+                    <div class="d-grid gap-2 d-sm-flex">
+                        <button type="submit" class="btn btn-success flex-fill"><i class="bi bi-box-arrow-in-down me-1"></i>Enregistrer une entrée</button>
+                        <button type="submit" class="btn btn-danger flex-fill"
+                                th:formaction="@{/stock/{id}/sorties(id=${article.id})}"
+                                data-confirm="Confirmer la sortie de {q} unité(s) de cet article ?">
+                            <i class="bi bi-box-arrow-up me-1"></i>Enregistrer une sortie</button>
+                    </div>
+                </form>
+            </div></div>
+        </div>
+        <div class="col-12 col-lg-7">
+            <div class="card h-100"><div class="card-body">
+                <h2 class="h6 mb-3">Historique des mouvements</h2>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <thead><tr><th>Date</th><th>Type</th><th class="text-end">Quantité</th></tr></thead>
+                        <tbody>
+                            <tr th:each="m : ${historique}">
+                                <td th:text="${#temporals.format(m.dateMouvement, 'dd/MM/yyyy')}">01/01/2026</td>
+                                <td><span class="badge" th:classappend="${m.quantiteSignee() > 0} ? 'text-bg-success' : 'text-bg-danger'"
+                                          th:text="${m.quantiteSignee() > 0} ? 'Entrée' : 'Sortie'">Type</span></td>
+                                <td class="text-end fw-semibold" th:classappend="${m.quantiteSignee() > 0} ? 'text-success' : 'text-danger'"
+                                    th:text="${m.quantiteSignee() > 0 ? '+' : ''} + ${m.quantiteSignee()}">+0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center text-muted my-4" th:if="${#lists.isEmpty(historique)}">Aucun mouvement pour cet article : le stock est nul.</p>
+            </div></div>
+        </div>
+    </div>
+    <p class="mt-3"><a th:href="@{/articles}"><i class="bi bi-arrow-left me-1"></i>Retour aux articles</a></p>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

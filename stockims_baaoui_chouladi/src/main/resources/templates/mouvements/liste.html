@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${titre})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar(${type})}"></nav>
+<main class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h3 mb-0">
+            <i class="bi me-2" th:classappend="${type == 'entrees'} ? 'bi-box-arrow-in-down text-success' : 'bi-box-arrow-up text-danger'"></i>
+            <span th:text="${titre}">Mouvements</span>
+        </h1>
+        <a class="btn btn-primary" th:href="@{/articles}"><i class="bi bi-plus-lg me-1"></i>Enregistrer un mouvement</a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row g-2 align-items-center mb-3">
+                <div class="col-12 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                        <input id="recherche" type="search" class="form-control" placeholder="Rechercher par date, référence ou désignation…" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 text-md-end text-muted">
+                    <span id="compteur" th:text="${#lists.size(mouvements)}">0</span> mouvement(s) ·
+                    total : <strong th:text="${#aggregates.sum(mouvements.![quantite])} ?: 0">0</strong> unité(s)
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr><th>Date du mouvement</th><th>Référence</th><th>Désignation</th><th class="text-end">Quantité</th><th class="text-end">Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ligne th:each="m : ${mouvements}">
+                            <td th:text="${#temporals.format(m.dateMouvement, 'dd/MM/yyyy')}">01/01/2026</td>
+                            <td><span class="ref" th:text="${m.article.reference}">REF</span></td>
+                            <td th:text="${m.article.designation}">Article</td>
+                            <td class="text-end fw-semibold" th:classappend="${type == 'entrees'} ? 'text-success' : 'text-danger'"
+                                th:text="${type == 'entrees' ? '+' : '−'} + ${m.quantite}">+0</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-primary" th:href="@{/stock/{id}(id=${m.article.id})}"><i class="bi bi-arrow-left-right me-1"></i>Voir le stock</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center text-muted my-4" th:if="${#lists.isEmpty(mouvements)}">Aucun mouvement enregistré pour le moment.</p>
+            <p id="aucun-resultat" class="text-center text-muted my-4 d-none">Aucun mouvement ne correspond à la recherche.</p>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

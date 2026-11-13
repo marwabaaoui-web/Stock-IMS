@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Nouvel article')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('nouveau')}"></nav>
+<main class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <h1 class="h3 mb-3"><i class="bi bi-plus-circle me-2 text-primary"></i>Nouvel article</h1>
+            <div class="card"><div class="card-body p-4">
+                <form th:action="@{/articles}" th:object="${article}" method="post" novalidate>
+                    <div class="mb-3">
+                        <label for="reference" class="form-label">Référence</label>
+                        <input id="reference" th:field="*{reference}" class="form-control" maxlength="20" placeholder="Ex. TIS-001"
+                               th:classappend="${#fields.hasErrors('reference')} ? 'is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{reference}">Erreur</div>
+                        <div class="form-text">Unique, 20 caractères au maximum.</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="designation" class="form-label">Désignation</label>
+                        <input id="designation" th:field="*{designation}" class="form-control" maxlength="80" placeholder="Ex. Rouleau de coton"
+                               th:classappend="${#fields.hasErrors('designation')} ? 'is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{designation}">Erreur</div>
+                        <div class="form-text">80 caractères au maximum.</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-1"></i>Enregistrer</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/articles}">Retour à la liste</a>
+                    </div>
+                </form>
+            </div></div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

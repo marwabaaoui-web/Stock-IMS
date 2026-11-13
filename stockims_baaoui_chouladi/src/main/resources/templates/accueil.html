@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Accueil')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar('accueil')}"></nav>
+<main class="container py-4">
+    <section class="hero mb-4">
+        <div class="row align-items-center position-relative">
+            <div class="col-md-8">
+                <span class="hero-tag mb-3"><i class="bi bi-lightning-charge-fill me-1"></i>Inventory Management System</span>
+                <h1 class="display-5 fw-bold text-white" th:text="${message}">Bienvenue dans StockIMS</h1>
+                <p class="lead mb-4">Suivez vos articles, enregistrez vos entrées et sorties, et connaissez votre stock en temps réel.</p>
+                <a class="btn btn-light btn-lg me-2 mb-2" th:href="@{/articles}"><i class="bi bi-list-ul me-1"></i>Voir les articles</a>
+                <a class="btn btn-outline-light btn-lg mb-2" th:href="@{/articles/nouveau}"><i class="bi bi-plus-circle me-1"></i>Nouvel article</a>
+            </div>
+            <div class="col-md-4 text-center d-none d-md-block">
+                <img th:src="@{/img/logo-ims.svg}" alt="Logo IMS" class="hero-logo">
+            </div>
+        </div>
+    </section>
+    <div class="row g-3">
+        <div class="col-12 col-md-4">
+            <div class="card stat-card stat-teal"><div class="card-body d-flex align-items-center">
+                <a class="stretched-link" th:href="@{/articles}" aria-label="Voir les articles"></a>
+                <i class="bi bi-boxes stat-icon"></i>
+                <div><div class="stat-value" data-count th:text="${resume['articles']}">0</div><div class="text-muted">Articles</div></div>
+            </div></div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card stat-card stat-green"><div class="card-body d-flex align-items-center">
+                <a class="stretched-link" th:href="@{/entrees}" aria-label="Voir les entrées"></a>
+                <i class="bi bi-box-arrow-in-down stat-icon"></i>
+                <div><div class="stat-value" data-count th:text="${resume['entrees']}">0</div><div class="text-muted">Entrées enregistrées</div></div>
+            </div></div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card stat-card stat-red"><div class="card-body d-flex align-items-center">
+                <a class="stretched-link" th:href="@{/sorties}" aria-label="Voir les sorties"></a>
+                <i class="bi bi-box-arrow-up stat-icon"></i>
+                <div><div class="stat-value" data-count th:text="${resume['sorties']}">0</div><div class="text-muted">Sorties enregistrées</div></div>
+            </div></div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: pied}"></footer>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

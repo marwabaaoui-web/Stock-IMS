@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(titre)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="'StockIMS – ' + ${titre}">StockIMS</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/img/logo-ims.svg}">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap-icons/bootstrap-icons.min.css}">
+    <link rel="stylesheet" th:href="@{/css/stockims.css}">
+</head>
+<body>
+<nav th:fragment="navbar(actif)" class="navbar navbar-expand-md navbar-dark app-nav">
+    <div class="container">
+        <a class="navbar-brand brand d-flex align-items-center" th:href="@{/}"><img th:src="@{/img/logo-ims.svg}" alt="Logo IMS" width="40" height="40" class="me-2"><span>Stock<span class="brand-accent">IMS</span></span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto gap-md-1">
+                <li class="nav-item"><a class="nav-link" th:classappend="${actif == 'accueil'} ? 'active'" th:href="@{/}"><i class="bi bi-house me-1"></i>Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${actif == 'articles'} ? 'active'" th:href="@{/articles}"><i class="bi bi-list-ul me-1"></i>Articles</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${actif == 'entrees'} ? 'active'" th:href="@{/entrees}"><i class="bi bi-box-arrow-in-down me-1"></i>Entrées</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${actif == 'sorties'} ? 'active'" th:href="@{/sorties}"><i class="bi bi-box-arrow-up me-1"></i>Sorties</a></li>
+                <li class="nav-item"><a class="nav-link" th:classappend="${actif == 'nouveau'} ? 'active'" th:href="@{/articles/nouveau}"><i class="bi bi-plus-circle me-1"></i>Nouvel article</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div th:fragment="alertes">
+    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert" th:if="${succes}">
+        <i class="bi bi-check-circle-fill me-2"></i><span th:text="${succes}">Opération réussie.</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+    </div>
+</div>
+<footer th:fragment="pied" class="app-footer text-center py-3 mt-5">
+    <img th:src="@{/img/logo-ims.svg}" alt="" width="22" height="22" class="me-2 align-text-bottom">StockIMS · Gestion de stock avec Spring Boot
+</footer>
+<th:block th:fragment="scripts">
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/stockims.js}"></script>
+</th:block>
+</body>
+</html>
