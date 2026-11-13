@@ -57,18 +57,14 @@ Dossier `docs/captures/` : `1_interface.png`, `2_stock_calcule.png`, `3_message_
 
 <img width="1903" height="971" alt="image" src="https://github.com/user-attachments/assets/0dbe1bf2-79da-4377-9e96-a1fe563f250e" />
 
-![img.png](img.png)
+<img width="1912" height="970" alt="image" src="https://github.com/user-attachments/assets/da94d9c4-5972-4468-b7d9-61cd591fad14" />
 
-![img_3.png](img_3.png)
+<img width="1907" height="860" alt="image" src="https://github.com/user-attachments/assets/463f6b44-9065-42cc-8bb2-d513b445c994" />
 
-![img_2.png](img_2.png)
+<img width="1757" height="732" alt="image" src="https://github.com/user-attachments/assets/7d0bace4-0556-4bda-af84-906f29349f9c" />
 
-![img_5.png](img_5.png)
+<img width="1851" height="968" alt="image" src="https://github.com/user-attachments/assets/a58edbb0-6e14-40dc-a1ac-070ff5c5f0db" />
 
-![img_4.png](img_4.png)
+<img width="1848" height="776" alt="image" src="https://github.com/user-attachments/assets/a64e32e5-ed00-4efa-8126-749d94494a88" />
 
-![img_6.png](img_6.png)
-
-![img_7.png](img_7.png)
-
-![img_8.png](img_8.png)
+<img width="1810" height="972" alt="image" src="https://github.com/user-attachments/assets/71a09816-2fa9-4200-ae1c-24f4b10b7864" />
