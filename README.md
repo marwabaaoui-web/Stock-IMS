@@ -53,7 +53,7 @@ quantité 0, négative, vide ou non entière refusée · données conservées ap
 
 ## Captures d'écran
 
-Dossier `docs/captures/` : `1_interface.png`, `2_stock_calcule.png`, `3_message_validation.png`.
+Dossier `docs/captures/` : 
 
 <img width="1903" height="971" alt="image" src="https://github.com/user-attachments/assets/0dbe1bf2-79da-4377-9e96-a1fe563f250e" />
 
